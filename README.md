@@ -93,3 +93,15 @@ After processing the included sample files:
 This project demonstrates practical Python skills in file handling, data processing, validation, exception handling, and Excel automation.
 
 It was developed as a portfolio project focused on solving a common business data-processing problem.
+
+## Testing
+
+The project includes automated tests using pytest.
+
+Install pytest:
+
+    python -m pip install pytest
+
+Run the tests from the project root:
+
+    python -m pytest -q
