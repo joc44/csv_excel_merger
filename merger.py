@@ -18,12 +18,10 @@ excel_files = list(INPUT_DIR.glob("*.xlsx"))
 
 files = sorted(csv_files + excel_files)
 
-# display_files
-
-for file in files:
-    print(file.name)
 
 # read_files
+
+dataframes = []
 
 for file in files:
 
@@ -32,6 +30,22 @@ for file in files:
     elif file.suffix == ".xlsx":
         df = pd.read_excel(file)
 
-    print(f'\nFájl: {file.name}')
-    print(f"Sorok száma: {len(df)}")
-    print(df.head())
+    dataframes.append(df)
+    print(f"Beolvasva:  {file.name}")
+
+
+
+# concatenating_data_frames
+
+if dataframes:
+    merged_df = pd.concat(dataframes, ignore_index=True)
+
+    print("\nEgyesített adatok:")
+    print(merged_df.to_string(index=False))
+
+    print(f"\nÖsszes sor: {len(merged_df)}")
+
+
+
+else:
+    print("Nem található feldolgozható fájl.")
