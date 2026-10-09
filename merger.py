@@ -30,20 +30,47 @@ for file in files:
     elif file.suffix == ".xlsx":
         df = pd.read_excel(file)
 
+    df["source_file"] = file.name
     dataframes.append(df)
-    print(f"Beolvasva:  {file.name}")
+    print(f"Beolvasva: {file.name} ({len(df)} sor)")
+
+
 
 
 
 # concatenating_data_frames
 
 if dataframes:
-    merged_df = pd.concat(dataframes, ignore_index=True)
+    merged_df = pd.concat(
+        dataframes,
+        ignore_index=True
+    )
 
-    print("\nEgyesített adatok:")
+    original_rows = len(merged_df)
+
+    merged_df = merged_df.drop_duplicates(
+        subset = [
+            "order_id",
+            "date",
+            "product",
+            "unit_price"
+        ],
+        keep="first"
+    )
+
+    final_rows = len(merged_df)
+    duplicates = original_rows - final_rows
+
+    print("\n---STATISZTIKA---")
+    print(f"Eredeti sorok: {original_rows}")
+    print(f"Duplikációk: {duplicates}")
+    print(f"Végső sorok: {final_rows}")
+
+    print("\n Egyesített adatok:")
     print(merged_df.to_string(index=False))
 
-    print(f"\nÖsszes sor: {len(merged_df)}")
+
+
 
 
 
